@@ -30,7 +30,7 @@ class Questions(models.Model):
         return self.label
 
 class Answer (models.Model):
-    questions = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     label = models.CharField(max_length=100)
     is_correct = models.BooleanField(default= False)
 
@@ -50,7 +50,7 @@ class QuizTaker(models.Model):
 
 class UsersAnswer(models.Model):
     quiz_taker = models.ForeignKey(QuizTaker, on_delete=models.CASCADE)
-    questions = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
@@ -58,5 +58,5 @@ class UsersAnswer(models.Model):
 
 
 @receiver(pre_save, sender=Quiz)
-def slugify_name(sender, instance, *args, ** kwargs):
+def slugify_name(sender, instance, *args, **kwargs):
     instance.slug = slugify(instance.name)

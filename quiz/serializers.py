@@ -30,7 +30,7 @@ class UsersAnswerSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class QuizTakerSerializer(serializers.ModelSerializer):
-    users_answer_set = UsersAnswerSerializer(many=True)
+    usersanswer_set = UsersAnswerSerializer(many=True)
 
     class Meta:
         model = QuizTaker
@@ -60,6 +60,7 @@ class MyQuizListSerialzer(serializers.ModelSerializer):
     completed = serializers.SerializerMethodField()
     score = serializers.SerializerMethodField()
     questions_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Quiz
         fields = ["id", "name", "description", "image", "slug", "questions_count", "completed", "score", "progress"]
@@ -76,7 +77,7 @@ class MyQuizListSerialzer(serializers.ModelSerializer):
         try:
             quiztaker = QuizTaker.objects.get(user=self.context['request'].user, quiz=obj)
             if quiztaker.completed == False:
-                questions_answered = UsersAnswer.object.filter(quiz_taker=quiztaker, answer__isnull=False).count()
+                questions_answered = UsersAnswer.objects.filter(quiz_taker=quiztaker, answer__isnull=False).count()
                 total_questions = obj.questions_set.all().count()
                 return int(questions_answered/total_questions) #return the count of the answers the user has completed
             return None
