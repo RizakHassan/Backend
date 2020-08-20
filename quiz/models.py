@@ -21,7 +21,7 @@ class Quiz(models.Model):
         return self.name
 
 
-class Questions(models.Model):
+class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     label = models.CharField(max_length=100)
     order = models.IntegerField(default=0)
@@ -30,7 +30,7 @@ class Questions(models.Model):
         return self.label
 
 class Answer (models.Model):
-    question = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     label = models.CharField(max_length=100)
     is_correct = models.BooleanField(default= False)
 
@@ -50,7 +50,7 @@ class QuizTaker(models.Model):
 
 class UsersAnswer(models.Model):
     quiz_taker = models.ForeignKey(QuizTaker, on_delete=models.CASCADE)
-    question = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, null=True)
 
     def __str__(self):

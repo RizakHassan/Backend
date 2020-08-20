@@ -15,5 +15,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name', 'email']
 
     objects = CustomUserManager()
-
-#unique=True
