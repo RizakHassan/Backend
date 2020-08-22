@@ -29,6 +29,8 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'accounts.User'
 
+CORS_OROGIN_ALLOW_ALL = True
+
 # Application definition
 
 INSTALLED_APPS = [
